@@ -521,68 +521,58 @@
       border-radius: 99px;
     }
 
-    /* ===== ABOUT ===== */
+    /* ===== ABOUT / COMPANY ===== */
     .about { background: var(--gray-light); }
 
-    .about-inner {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 72px;
-      align-items: center;
-    }
-
-    .about-photo {
-      width: 240px; height: 240px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 8px 48px rgba(0,0,0,0.12);
-      flex-shrink: 0;
-    }
-    .about-placeholder {
-      width: 240px; height: 240px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #c7d2fe, #a5b4fc);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 5rem;
-      flex-shrink: 0;
-      box-shadow: 0 8px 48px rgba(99,102,241,0.18);
-    }
-
-    .about-text h2 {
-      font-size: clamp(1.6rem, 3vw, 2.1rem);
-      font-weight: 900;
-      margin-bottom: 6px;
-    }
-    .about-en {
-      font-size: 0.82rem;
-      color: var(--gray-text);
-      letter-spacing: 0.1em;
-      margin-bottom: 20px;
-    }
-    .about-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 24px;
-    }
-    .about-tag {
+    .company-table-wrap {
+      max-width: 720px;
+      margin: 0 auto;
       background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.08);
       border: 1.5px solid var(--gray-mid);
+    }
+
+    .company-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .company-table th,
+    .company-table td {
+      padding: 20px 28px;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      border-bottom: 1px solid var(--gray-mid);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .company-table tbody tr:last-child th,
+    .company-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .company-table th {
+      width: 160px;
+      font-weight: 700;
+      color: var(--accent);
+      background: rgba(99,102,241,0.04);
+      white-space: nowrap;
+    }
+
+    .company-table td {
       color: var(--primary);
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 5px 14px;
-      border-radius: 99px;
     }
-    .about-quote {
-      font-size: 0.97rem;
-      line-height: 1.95;
-      color: #334155;
-      border-left: 4px solid var(--accent);
-      padding-left: 20px;
+
+    .company-table td a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
     }
+    .company-table td a:hover { color: var(--accent-dark); }
 
     /* ===== PRICING ===== */
     .pricing { background: white; }
@@ -947,11 +937,7 @@
       .problem-grid     { grid-template-columns: 1fr; gap: 16px; }
       .features-grid    { grid-template-columns: 1fr; gap: 20px; }
 
-      .about-inner      { grid-template-columns: 1fr; gap: 32px; text-align: center; }
-      .about-placeholder,
-      .about-photo      { margin: 0 auto; }
-      .about-tags       { justify-content: center; }
-      .about-quote      { text-align: left; }
+      .company-table-wrap { border-radius: 12px; }
 
       .pricing-wrap     { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
       .contact-wrap     { padding: 40px 28px; }
@@ -1020,11 +1006,9 @@
       .feature-card p   { font-size: 0.85rem; }
       .feature-tag      { font-size: 0.7rem; }
 
-      /* 代表NAO */
-      .about-placeholder,
-      .about-photo      { width: 180px; height: 180px; font-size: 3.8rem; }
-      .about-text h2    { font-size: 1.5rem; }
-      .about-quote      { font-size: 0.88rem; padding-left: 16px; }
+      /* 会社概要テーブル */
+      .company-table th { width: 100px; font-size: 0.82rem; padding: 14px 16px; }
+      .company-table td { font-size: 0.88rem; padding: 14px 16px; }
 
       /* 料金 */
       .pricing-card     { padding: 32px 22px; }
@@ -1069,8 +1053,7 @@
         <nav aria-label="メインナビゲーション">
           <a href="#problem">課題</a>
           <a href="#features">機能</a>
-          <a href="#about">代表</a>
-          <a href="#pricing">料金</a>
+          <a href="#about">会社概要</a>
           <a href="#contact" class="nav-cta">お問い合わせ</a>
         </nav>
         <div class="hamburger" id="hamburger" role="button" tabindex="0" aria-label="メニューを開く">
@@ -1085,8 +1068,7 @@
     <button class="mobile-nav-close" id="mobileNavClose" aria-label="メニューを閉じる">&times;</button>
     <a href="#problem"  class="mobile-link">課題</a>
     <a href="#features" class="mobile-link">機能</a>
-    <a href="#about"    class="mobile-link">代表</a>
-    <a href="#pricing"  class="mobile-link">料金</a>
+    <a href="#about"    class="mobile-link">会社概要</a>
     <a href="#contact"  class="mobile-link">お問い合わせ</a>
   </div>
 
@@ -1272,88 +1254,47 @@
       </div>
     </section>
 
-    <!-- ===== ABOUT ===== -->
+    <!-- ===== ABOUT / COMPANY ===== -->
     <section class="section about" id="about" aria-labelledby="about-h2">
       <div class="container">
-        <div class="about-inner">
-
-          <!-- 写真が用意できたら下記のimgタグのコメントを外してください -->
-          <!--
-          <img
-            src="images/nao.jpg"
-            alt="TODOKE代表 NAO - 元プロアーティスト出身の起業家"
-            class="about-photo"
-            width="240" height="240"
-          >
-          -->
-          <div class="about-placeholder" role="img" aria-label="代表NAOの写真（準備中）">🎤</div>
-
-          <div class="about-text">
-            <span class="section-label">代表プロフィール</span>
-            <h2 id="about-h2">NAO</h2>
-            <p class="about-en">Founder &amp; CEO of TODOKE</p>
-            <div class="about-tags">
-              <span class="about-tag">元プロアーティスト</span>
-              <span class="about-tag">メジャーレーベル経験</span>
-              <span class="about-tag">起業家</span>
-            </div>
-            <blockquote class="about-quote">
-              「インディーズ時代、グッズが売れず、手数料で利益が消え、DM返信と発送作業で疲弊していました。
-              メジャーデビューして初めてわかった——問題は才能じゃなく、環境だったんです。<br><br>
-              アーティストが音楽だけに集中できる環境をつくりたい。
-              同じ悩みをリアルに経験したからこそつくれたサービスが、TODOKEです。」
-            </blockquote>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== PRICING ===== -->
-    <section class="section pricing" id="pricing" aria-labelledby="pricing-h2">
-      <div class="container">
         <div class="text-center" style="margin-bottom:56px;">
-          <span class="section-label">料金プラン</span>
-          <h2 class="section-title" id="pricing-h2">シンプルで明快な料金体系</h2>
-          <p class="section-desc">隠れた費用は一切ありません</p>
+          <span class="section-label">COMPANY</span>
+          <h2 class="section-title" id="about-h2">会社概要</h2>
+          <p class="section-desc">TODOKE を提供する TRIM engineerings について</p>
         </div>
-        <div class="pricing-wrap">
-
-          <div class="pricing-card free">
-            <div class="pricing-badge-wrap">
-              <span class="pricing-badge">発送代行 手数料</span>
-            </div>
-            <p class="pricing-feature-name">アーティスト グッズ 販売・発送代行</p>
-            <div>
-              <span class="pricing-amount">¥0</span>
-            </div>
-            <p style="font-size:.85rem;opacity:.6;margin-top:6px;">完全無料・永続的に</p>
-            <div class="pricing-divider"></div>
-            <ul class="pricing-list">
-              <li><span class="ck">✓</span><span>販売手数料：<strong>完全無料</strong></span></li>
-              <li><span class="ck">✓</span><span>登録料・月額費用：<strong>なし</strong></span></li>
-              <li><span class="ck">✓</span><span>発送実費（レターパックライト430円）のみ</span></li>
-              <li><span class="ck">✓</span><span>梱包・発送作業はすべてTODOKEが対応</span></li>
-            </ul>
-            <p class="pricing-note">※ レターパックライト代（430円/件）は発送実費としてご負担いただきます。それ以外の費用は一切発生しません。</p>
-          </div>
-
-          <div class="pricing-card inquiry">
-            <div class="pricing-badge-wrap">
-              <span class="pricing-badge">その他機能</span>
-            </div>
-            <p class="pricing-feature-name">ライブ予約管理 / DM自動返信 / EC</p>
-            <div class="pricing-amount">お問い合わせ</div>
-            <p style="font-size:.82rem;color:var(--gray-text);margin-top:6px;">ご利用状況に合わせてご案内</p>
-            <div class="pricing-divider"></div>
-            <ul class="pricing-list">
-              <li><span class="ck">✓</span><span>ライブ予約管理機能</span></li>
-              <li><span class="ck">✓</span><span>AI DM自動返信機能</span></li>
-              <li><span class="ck">✓</span><span>ECストア機能</span></li>
-              <li><span class="ck">✓</span><span>NAOによる直接サポート</span></li>
-            </ul>
-            <a href="#contact" class="btn-inquiry">詳細を問い合わせる</a>
-          </div>
-
+        <div class="company-table-wrap">
+          <table class="company-table">
+            <tbody>
+              <tr>
+                <th>社名</th>
+                <td>TRIM engineerings</td>
+              </tr>
+              <tr>
+                <th>サービス名</th>
+                <td>TODOKE</td>
+              </tr>
+              <tr>
+                <th>代表者</th>
+                <td>鈴木 直明（NAO）</td>
+              </tr>
+              <tr>
+                <th>所在地</th>
+                <td>大阪府大阪市西区心斎橋1丁目3-12</td>
+              </tr>
+              <tr>
+                <th>事業内容</th>
+                <td>Webアプリ開発・インディーズアーティスト支援サービスの運展</td>
+              </tr>
+              <tr>
+                <th>設立</th>
+                <td>2025年</td>
+              </tr>
+              <tr>
+                <th>URL</th>
+                <td><a href="https://trim-engineerings.com" target="_blank" rel="noopener noreferrer">https://trim-engineerings.com</a></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
@@ -1423,8 +1364,7 @@
       <nav class="footer-nav" aria-label="フッターナビゲーション">
         <a href="#problem">課題</a>
         <a href="#features">4大機能</a>
-        <a href="#about">代表NAO</a>
-        <a href="#pricing">料金</a>
+        <a href="#about">会社概要</a>
         <a href="#contact">お問い合わせ</a>
       </nav>
       <p class="footer-copy">&copy; 2026 TODOKE. All rights reserved.</p>
