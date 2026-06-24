@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <title>TODOKE | アーティスト グッズ 販売・ライブ予約・DM自動返信 ワンストップ支援アプリ</title>
+  <meta name="description" content="インディーズアーティスト向け総合支援アプリ「TODOKE」。アーティスト グッズ 販売EC・発送代行（手数料0円）・ライブ予約管理・AI DM自動返信をワンストップで提供。元プロアーティストNAOが開発。">
+  <meta name="keywords" content="アーティスト グッズ 販売, インディーズアーティスト, 発送代行 手数料無料, ライブ予約管理, DM自動返信, アーティスト支援アプリ">
+
+  <!-- OGP -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="TODOKE | アーティスト グッズ 販売・ライブ予約・DM自動返信 ワンストップ支援アプリ">
+  <meta property="og:description" content="インディーズアーティストの「面倒」をまるごと解決。グッズ販売・発送代行（手数料0円）・ライブ予約・AI DM自動返信をひとつのアプリで。">
+  <meta property="og:image" content="images/nao.jpg">
+  <meta property="og:url" content="https://todoke.jp">
+  <meta property="og:site_name" content="TODOKE">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TODOKE | アーティスト グッズ 販売・ライブ予約・DM自動返信 ワンストップ支援アプリ">
+  <meta name="twitter:description" content="インディーズアーティストの「面倒」をまるごと解決。グッズ販売・発送代行（手数料0円）・ライブ予約・AI DM自動返信をひとつのアプリで。">
+  <meta name="twitter:image" content="images/nao.jpg">
+
+  <!-- JSON-LD 構造化データ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "TODOKE",
+    "description": "インディーズアーティスト向け総合支援アプリ。アーティスト グッズ 販売EC・発送代行・ライブ予約管理・AI DM自動返信をワンストップで提供。",
+    "url": "https://todoke.jp",
+    "logo": "https://todoke.jp/images/nao.jpg",
+    "founder": {
+      "@type": "Person",
+      "name": "NAO",
+      "jobTitle": "代表・元プロアーティスト"
+    },
+    "serviceType": ["アーティスト グッズ 販売", "発送代行", "ライブ予約管理", "DM自動返信"],
+    "areaServed": "JP"
+  }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary:       #0f172a;
+      --accent:        #6366f1;
+      --accent-dark:   #4f46e5;
+      --accent-light:  #818cf8;
+      --accent2:       #e94560;
+      --white:         #ffffff;
+      --gray-light:    #f8fafc;
+      --gray-mid:      #e2e8f0;
+      --gray-text:     #64748b;
+      --max-width:     1080px;
+      --radius:        14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      color: var(--primary);
+      background: var(--white);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+    a   { text-decoration: none; color: inherit; }
+
+    .container {
+      width: 90%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .section { padding: 96px 0; }
+
+    .section-label {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 99px;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+      font-weight: 900;
+      line-height: 1.35;
+      margin-bottom: 14px;
+    }
+
+    .section-desc {
+      color: var(--gray-text);
+      font-size: 1rem;
+      margin-bottom: 60px;
+      line-height: 1.9;
+    }
+
+    .text-center { text-align: center; }
+    .text-accent  { color: var(--accent); }
+    .text-accent2 { color: var(--accent2); }
+
+    /* ===== HEADER ===== */
+    header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-mid);
+      transition: box-shadow 0.3s;
+    }
+    header.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.07); }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+    }
+
+    .logo {
+      font-size: 1.55rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      color: var(--primary);
+    }
+    .logo .dot { color: var(--accent); }
+
+    nav {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
+    nav a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--gray-text);
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--accent); }
+
+    .nav-cta {
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: white !important;
+      padding: 10px 22px;
+      border-radius: 99px;
+      font-weight: 700 !important;
+      transition: opacity 0.2s, transform 0.2s !important;
+      box-shadow: 0 2px 12px rgba(99,102,241,0.3);
+    }
+    .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--primary);
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* ===== MOBILE NAV ===== */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.97);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { color: white; font-size: 1.25rem; font-weight: 700; }
+    .mobile-nav-close {
+      position: absolute;
+      top: 20px; right: 20px;
+      background: none; border: none;
+      color: white; font-size: 2rem;
+      cursor: pointer; padding: 8px;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding-top: 92px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(160deg, #f8fafc 0%, #eef2ff 55%, #fdf2f8 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -160px; right: -160px;
+      width: 560px; height: 560px;
+      background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 68%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -120px; left: -120px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(233,69,96,0.07) 0%, transparent 68%);
+      border-radius: 50%;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      border: 1.5px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 6px 16px;
+      border-radius: 99px;
+      margin-bottom: 22px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 7px; height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: blink 1.6s infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.4; transform:scale(1.4); }
+    }
+
+    .hero h1 {
+      font-size: clamp(1.9rem, 4.5vw, 3rem);
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+      position: relative;
+    }
+    .hero h1 em::after {
+      content: '';
+      position: absolute;
+      bottom: 1px; left: 0;
+      width: 100%; height: 7px;
+      background: rgba(99,102,241,0.18);
+      border-radius: 4px;
+    }
+
+    .hero-sub {
+      font-size: 1.02rem;
+      color: var(--gray-text);
+      line-height: 1.95;
+      margin-bottom: 36px;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+    .pill {
+      background: white;
+      border: 1.5px solid var(--gray-mid);
+      color: var(--primary);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 99px;
+    }
+    .pill-accent {
+      background: rgba(99,102,241,0.08);
+      border-color: rgba(99,102,241,0.3);
+      color: var(--accent);
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: white;
+      font-weight: 700;
+      font-size: 1.02rem;
+      padding: 16px 36px;
+      border-radius: 99px;
+      box-shadow: 0 4px 28px rgba(99,102,241,0.38);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 36px rgba(99,102,241,0.44);
+    }
+
+    .btn-ghost {
+      display: inline-block;
+      color: var(--gray-text);
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-bottom: 1.5px solid currentColor;
+      padding-bottom: 1px;
+      transition: color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--accent); }
+
+    /* Hero right: feature cards stack */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .mini-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.07);
+      border: 1.5px solid var(--gray-mid);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .mini-card:hover {
+      transform: translateX(4px);
+      box-shadow: 0 6px 28px rgba(0,0,0,0.1);
+    }
+
+    .mini-card-icon {
+      font-size: 2rem;
+      width: 52px; height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      flex-shrink: 0;
+    }
+
+    .mini-card-info { flex: 1; }
+    .mini-card-info strong {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .mini-card-info span {
+      font-size: 0.8rem;
+      color: var(--gray-text);
+    }
+
+    .mini-card-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 99px;
+      flex-shrink: 0;
+    }
+
+    /* ===== PROBLEM ===== */
+    .problem { background: var(--primary); }
+
+    .problem .section-title { color: white; }
+    .problem .section-desc  { color: rgba(255,255,255,0.55); }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .problem-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .problem-card:hover { background: rgba(255,255,255,0.08); }
+
+    .problem-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+    }
+
+    .problem-num {
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: rgba(99,102,241,0.25);
+      line-height: 1;
+      margin-bottom: 14px;
+    }
+    .problem-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 10px;
+    }
+    .problem-card p {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.58);
+      line-height: 1.85;
+    }
+
+    /* ===== FEATURES ===== */
+    .features { background: var(--white); }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+
+    .feature-card {
+      background: var(--gray-light);
+      border-radius: 18px;
+      padding: 44px 36px;
+      border: 2px solid transparent;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .feature-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(99,102,241,0.12);
+    }
+    .feature-card:hover::before { opacity: 1; }
+
+    .feature-icon-wrap {
+      width: 64px; height: 64px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 22px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--gray-text);
+      line-height: 1.85;
+    }
+    .feature-tag {
+      display: inline-block;
+      margin-top: 18px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 99px;
+    }
+
+    /* ===== ABOUT ===== */
+    .about { background: var(--gray-light); }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    .about-photo {
+      width: 240px; height: 240px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 8px 48px rgba(0,0,0,0.12);
+      flex-shrink: 0;
+    }
+    .about-placeholder {
+      width: 240px; height: 240px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #c7d2fe, #a5b4fc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      flex-shrink: 0;
+      box-shadow: 0 8px 48px rgba(99,102,241,0.18);
+    }
+
+    .about-text h2 {
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+    .about-en {
+      font-size: 0.82rem;
+      color: var(--gray-text);
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+    }
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .about-tag {
+      background: white;
+      border: 1.5px solid var(--gray-mid);
+      color: var(--primary);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 99px;
+    }
+    .about-quote {
+      font-size: 0.97rem;
+      line-height: 1.95;
+      color: #334155;
+      border-left: 4px solid var(--accent);
+      padding-left: 20px;
+    }
+
+    /* ===== PRICING ===== */
+    .pricing { background: white; }
+
+    .pricing-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      max-width: 840px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      border-radius: 20px;
+      padding: 44px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-card.free {
+      background: var(--primary);
+      color: white;
+    }
+    .pricing-card.free::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 260px; height: 260px;
+      background: radial-gradient(circle, rgba(99,102,241,0.25) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .pricing-card.inquiry {
+      background: var(--gray-light);
+      border: 2px solid var(--gray-mid);
+      color: var(--primary);
+    }
+
+    .pricing-badge-wrap {
+      margin-bottom: 16px;
+    }
+    .pricing-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 5px 13px;
+      border-radius: 99px;
+    }
+    .free .pricing-badge {
+      background: rgba(99,102,241,0.6);
+      color: white;
+    }
+    .inquiry .pricing-badge {
+      background: rgba(99,102,241,0.1);
+      color: var(--accent);
+    }
+
+    .pricing-feature-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      opacity: 0.7;
+      margin-bottom: 8px;
+    }
+
+    .pricing-amount {
+      font-size: clamp(3.5rem, 8vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1;
+      color: var(--accent-light);
+    }
+    .inquiry .pricing-amount {
+      font-size: 2rem;
+      color: var(--accent);
+    }
+    .pricing-unit {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent-light);
+    }
+
+    .pricing-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.12);
+      margin: 24px 0;
+    }
+    .inquiry .pricing-divider {
+      background: var(--gray-mid);
+    }
+
+    .pricing-list {
+      list-style: none;
+    }
+    .pricing-list li {
+      display: flex;
+      gap: 10px;
+      font-size: 0.88rem;
+      padding: 7px 0;
+      align-items: flex-start;
+    }
+    .free .pricing-list li { color: rgba(255,255,255,0.8); }
+    .inquiry .pricing-list li { color: var(--gray-text); }
+
+    .pricing-list li .ck { color: var(--accent-light); font-weight: 700; flex-shrink: 0; }
+    .inquiry .pricing-list li .ck { color: var(--accent); }
+
+    .pricing-note {
+      margin-top: 20px;
+      font-size: 0.78rem;
+      opacity: 0.45;
+      line-height: 1.7;
+    }
+
+    .btn-inquiry {
+      display: block;
+      margin-top: 28px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: white;
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 13px 24px;
+      border-radius: 99px;
+      box-shadow: 0 4px 16px rgba(99,102,241,0.3);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-inquiry:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* ===== CONTACT ===== */
+    .contact { background: var(--gray-light); }
+
+    .contact-wrap {
+      max-width: 620px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 22px;
+      padding: 56px 48px;
+      box-shadow: 0 4px 48px rgba(0,0,0,0.06);
+    }
+
+    .form-group { margin-bottom: 22px; }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .form-group label .req { color: var(--accent2); margin-left: 3px; }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 13px 16px;
+      border: 2px solid var(--gray-mid);
+      border-radius: 10px;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.97rem;
+      color: var(--primary);
+      background: var(--gray-light);
+      transition: border-color 0.2s, background 0.2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+      background: white;
+    }
+    .form-group textarea { min-height: 136px; resize: vertical; }
+
+    .form-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: white;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 17px;
+      border: none;
+      border-radius: 99px;
+      cursor: pointer;
+      box-shadow: 0 4px 24px rgba(99,102,241,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .form-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(99,102,241,0.42);
+    }
+    .form-note {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--gray-text);
+      margin-top: 14px;
+      line-height: 1.7;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--primary);
+      color: rgba(255,255,255,0.55);
+      padding: 52px 0 32px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-size: 1.75rem;
+      font-weight: 900;
+      color: white;
+      letter-spacing: 0.14em;
+      margin-bottom: 10px;
+    }
+    .footer-logo .dot { color: var(--accent-light); }
+    .footer-tagline {
+      font-size: 0.875rem;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    .footer-nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 28px;
+      margin-bottom: 32px;
+    }
+    .footer-nav a {
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.55);
+      transition: color 0.2s;
+    }
+    .footer-nav a:hover { color: white; }
+    .footer-copy {
+      font-size: 0.78rem;
+      border-top: 1px solid rgba(255,255,255,0.09);
+      padding-top: 24px;
+    }
+
+    /* ===== SCROLL TOP ===== */
+    .scroll-top {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      width: 46px; height: 46px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(99,102,241,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.2s;
+      z-index: 100;
+    }
+    .scroll-top.visible { opacity: 1; pointer-events: auto; }
+    .scroll-top:hover { transform: translateY(-2px); }
+
+    /* ===== MERCARI COMPARISON ===== */
+    .mercari-cmp {
+      margin-bottom: 28px;
+    }
+
+    .mercari-cmp-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--gray-text);
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+
+    .mercari-cmp-box {
+      display: flex;
+      align-items: stretch;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      border: 1.5px solid var(--gray-mid);
+    }
+
+    .cmp-side {
+      flex: 1;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .cmp-side.mercari {
+      background: #fff5f5;
+      border-right: none;
+    }
+
+    .cmp-side.todoke {
+      background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+    }
+
+    .cmp-platform {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+    .cmp-side.mercari .cmp-platform { color: #c0392b; }
+    .cmp-side.todoke  .cmp-platform { color: var(--accent-dark); }
+
+    .cmp-fee {
+      font-size: 1.35rem;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+    .cmp-side.mercari .cmp-fee { color: #e74c3c; }
+    .cmp-side.todoke  .cmp-fee { color: var(--accent); }
+
+    .cmp-note {
+      font-size: 0.72rem;
+      font-weight: 500;
+    }
+    .cmp-side.mercari .cmp-note { color: #c0392b; }
+    .cmp-side.todoke  .cmp-note { color: var(--accent-dark); }
+
+    .cmp-vs {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      background: white;
+      font-size: 0.72rem;
+      font-weight: 900;
+      color: var(--gray-text);
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+      border-left: 1.5px solid var(--gray-mid);
+      border-right: 1.5px solid var(--gray-mid);
+    }
+
+    .cmp-copy {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: var(--gray-text);
+      line-height: 1.7;
+      padding-left: 2px;
+    }
+
+    .cmp-copy strong {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* ===== RESPONSIVE ===== */
+
+    /* タブレット〜 */
+    @media (max-width: 900px) {
+      nav               { display: none; }
+      .hamburger        { display: flex; }
+
+      .hero-inner       { grid-template-columns: 1fr; gap: 36px; text-align: center; }
+      .hero-cta         { justify-content: center; }
+      .hero-pills       { justify-content: center; }
+      .mercari-cmp      { max-width: 480px; margin-left: auto; margin-right: auto; }
+
+      .problem-grid     { grid-template-columns: 1fr; gap: 16px; }
+      .features-grid    { grid-template-columns: 1fr; gap: 20px; }
+
+      .about-inner      { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+      .about-placeholder,
+      .about-photo      { margin: 0 auto; }
+      .about-tags       { justify-content: center; }
+      .about-quote      { text-align: left; }
+
+      .pricing-wrap     { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+      .contact-wrap     { padding: 40px 28px; }
+    }
+
+    /* スマホ（768px以下）完全最適化 */
+    @media (max-width: 768px) {
+      /* ベース */
+      body              { font-size: 15px; }
+      .container        { width: 92%; }
+      .section          { padding: 60px 0; }
+      .section-title    { font-size: 1.5rem; }
+      .section-desc     { font-size: 0.9rem; margin-bottom: 36px; }
+
+      /* ヘッダー */
+      .header-inner     { padding: 14px 0; }
+      .logo             { font-size: 1.35rem; }
+
+      /* Hero */
+      .hero             { padding-top: 72px; min-height: auto; padding-bottom: 56px; }
+      .hero-inner       { gap: 28px; }
+      .hero-eyebrow     { font-size: 0.72rem; padding: 5px 13px; margin-bottom: 16px; }
+      .hero h1          { font-size: 1.65rem; line-height: 1.35; margin-bottom: 16px; }
+      .hero-sub         { font-size: 0.9rem; line-height: 1.85; margin-bottom: 24px; }
+      .hero-pills       { gap: 6px; margin-bottom: 24px; }
+      .pill             { font-size: 0.73rem; padding: 4px 11px; }
+      .hero-cta         { flex-direction: column; align-items: center; gap: 12px; }
+      .btn-primary      { width: 100%; max-width: 320px; text-align: center; padding: 15px 24px; font-size: 0.97rem; }
+      .btn-ghost        { font-size: 0.85rem; }
+
+      /* メルカリ vs TODOKE 対比ボックス：縦並び */
+      .mercari-cmp      { max-width: 100%; margin-bottom: 24px; }
+      .mercari-cmp-label { font-size: 0.75rem; }
+      .mercari-cmp-box  { flex-direction: column; border-radius: 12px; }
+      .cmp-side         { padding: 14px 18px; }
+      .cmp-side.mercari { border-right: none; border-bottom: 1.5px solid var(--gray-mid); }
+      .cmp-fee          { font-size: 1.2rem; }
+      .cmp-vs           {
+        padding: 8px 0;
+        border-left: none;
+        border-right: none;
+        border-top: 1.5px solid var(--gray-mid);
+        border-bottom: 1.5px solid var(--gray-mid);
+        font-size: 0.7rem;
+      }
+      .cmp-copy         { font-size: 0.75rem; }
+
+      /* ミニカード（Hero右）*/
+      .hero-right       { gap: 10px; }
+      .mini-card        { padding: 13px 14px; border-radius: 12px; }
+      .mini-card-icon   { width: 44px; height: 44px; font-size: 1.6rem; border-radius: 10px; }
+      .mini-card-info strong { font-size: 0.85rem; }
+      .mini-card-info span  { font-size: 0.73rem; }
+      .mini-card-badge  { font-size: 0.65rem; padding: 3px 8px; }
+
+      /* 課題セクション */
+      .problem-card     { padding: 26px 20px; }
+      .problem-num      { font-size: 2.2rem; margin-bottom: 10px; }
+      .problem-card h3  { font-size: 0.97rem; }
+      .problem-card p   { font-size: 0.83rem; }
+
+      /* 機能カード：1カラム */
+      .feature-card     { padding: 28px 22px; border-radius: 14px; }
+      .feature-icon-wrap { width: 54px; height: 54px; font-size: 1.7rem; margin-bottom: 16px; }
+      .feature-card h3  { font-size: 1.05rem; }
+      .feature-card p   { font-size: 0.85rem; }
+      .feature-tag      { font-size: 0.7rem; }
+
+      /* 代表NAO */
+      .about-placeholder,
+      .about-photo      { width: 180px; height: 180px; font-size: 3.8rem; }
+      .about-text h2    { font-size: 1.5rem; }
+      .about-quote      { font-size: 0.88rem; padding-left: 16px; }
+
+      /* 料金 */
+      .pricing-card     { padding: 32px 22px; }
+      .pricing-amount   { font-size: 3.8rem; }
+      .inquiry .pricing-amount { font-size: 1.5rem; }
+      .pricing-list li  { font-size: 0.83rem; }
+      .btn-inquiry      { font-size: 0.87rem; padding: 12px 20px; }
+
+      /* お問い合わせ */
+      .contact-wrap     { padding: 32px 18px; border-radius: 16px; }
+      .form-group input,
+      .form-group textarea { font-size: 0.95rem; padding: 12px 14px; }
+      .form-submit      { font-size: 0.95rem; padding: 15px; }
+
+      /* フッター */
+      footer            { padding: 40px 0 24px; }
+      .footer-logo      { font-size: 1.5rem; }
+      .footer-tagline   { font-size: 0.8rem; }
+      .footer-nav       { gap: 18px; }
+      .footer-nav a     { font-size: 0.78rem; }
+      .footer-copy      { font-size: 0.72rem; }
+
+      /* スクロールトップ */
+      .scroll-top       { bottom: 18px; right: 18px; width: 42px; height: 42px; font-size: 1.1rem; }
+    }
+
+    /* 小型スマホ（375px以下）*/
+    @media (max-width: 375px) {
+      .hero h1          { font-size: 1.45rem; }
+      .section-title    { font-size: 1.35rem; }
+      .container        { width: 94%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header id="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="#" class="logo">TOD<span class="dot">O</span>KE</a>
+        <nav aria-label="メインナビゲーション">
+          <a href="#problem">課題</a>
+          <a href="#features">機能</a>
+          <a href="#about">代表</a>
+          <a href="#pricing">料金</a>
+          <a href="#contact" class="nav-cta">お問い合わせ</a>
+        </nav>
+        <div class="hamburger" id="hamburger" role="button" tabindex="0" aria-label="メニューを開く">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- モバイルナビ -->
+  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <button class="mobile-nav-close" id="mobileNavClose" aria-label="メニューを閉じる">&times;</button>
+    <a href="#problem"  class="mobile-link">課題</a>
+    <a href="#features" class="mobile-link">機能</a>
+    <a href="#about"    class="mobile-link">代表</a>
+    <a href="#pricing"  class="mobile-link">料金</a>
+    <a href="#contact"  class="mobile-link">お問い合わせ</a>
+  </div>
+
+  <main>
+    <!-- ===== HERO ===== -->
+    <section class="hero" aria-labelledby="hero-h1">
+      <div class="container">
+        <div class="hero-inner">
+
+          <div class="hero-text">
+            <div class="hero-eyebrow">インディーズアーティスト向け総合支援アプリ</div>
+            <h1 id="hero-h1">
+              音楽に、<br>
+              <em>全力集中</em>できる<br>
+              環境をつくろう。
+            </h1>
+            <p class="hero-sub">
+              アーティスト グッズ 販売・発送代行・<br>
+              ライブ予約管理・AI DM自動返信まで。<br>
+              インディーズ活動の「面倒」をまるごと引き受ける<br>
+              ワンストップアプリが、TODOKEです。
+            </p>
+            <!-- メルカリ対比バナー -->
+            <div class="mercari-cmp">
+              <p class="mercari-cmp-label">CD・グッズのメルカリ販売、手数料でもったいないと思ったことはありませんか？</p>
+              <div class="mercari-cmp-box">
+                <div class="cmp-side mercari">
+                  <span class="cmp-platform">メルカリ</span>
+                  <span class="cmp-fee">手数料 10%</span>
+                  <span class="cmp-note">売上げから自動で引かれる</span>
+                </div>
+                <div class="cmp-vs">VS</div>
+                <div class="cmp-side todoke">
+                  <span class="cmp-platform">TODOKE</span>
+                  <span class="cmp-fee">手数料 完全0円</span>
+                  <span class="cmp-note">売上げは全額あなたに</span>
+                </div>
+              </div>
+              <p class="cmp-copy">TODOKEなら、通販販売の手数料が<strong>完全無料</strong>。<br>売上げは1円も引かれず、全額あなたの手元に届きます。</p>
+            </div>
+
+            <div class="hero-pills">
+              <span class="pill pill-accent">手数料完全0円</span>
+              <span class="pill pill-accent">AI搭載</span>
+              <span class="pill">ワンストップ</span>
+              <span class="pill">元アーティスト開発</span>
+            </div>
+            <div class="hero-cta">
+              <a href="#features" class="btn-primary">詳しく見る</a>
+              <a href="#contact"  class="btn-ghost">無料で問い合わせる</a>
+            </div>
+          </div>
+
+          <div class="hero-right">
+            <div class="mini-card">
+              <div class="mini-card-icon" style="background:#eef2ff;">🎟️</div>
+              <div class="mini-card-info">
+                <strong>ライブ予約管理</strong>
+                <span>予約受付・管理を自動化</span>
+              </div>
+              <span class="mini-card-badge" style="background:#eef2ff;color:#6366f1;">NEW</span>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-icon" style="background:#fce7f3;">💬</div>
+              <div class="mini-card-info">
+                <strong>DM自動返信（AI）</strong>
+                <span>ファン対応をAIが24時間代行</span>
+              </div>
+              <span class="mini-card-badge" style="background:#fce7f3;color:#db2777;">AI</span>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-icon" style="background:#ecfdf5;">🛒</div>
+              <div class="mini-card-info">
+                <strong>アーティスト グッズ 販売EC</strong>
+                <span>オリジナルグッズ・CDを即販売</span>
+              </div>
+              <span class="mini-card-badge" style="background:#ecfdf5;color:#10b981;">EC</span>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-icon" style="background:#fff7ed;">📦</div>
+              <div class="mini-card-info">
+                <strong>発送代行</strong>
+                <span>手数料完全無料・レターパック対応</span>
+              </div>
+              <span class="mini-card-badge" style="background:#fee2e2;color:#e94560;">手数料0円</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROBLEM ===== -->
+    <section class="section problem" id="problem" aria-labelledby="problem-h2">
+      <div class="container">
+        <div class="text-center" style="margin-bottom:56px;">
+          <span class="section-label">こんな悩みありませんか？</span>
+          <h2 class="section-title" id="problem-h2" style="color:white;">
+            インディーズアーティストが<br>
+            アーティスト グッズ 販売・活動で感じる4つの壁
+          </h2>
+          <p class="section-desc">多くのアーティストが同じ課題で時間とお金を消耗しています</p>
+        </div>
+        <div class="problem-grid">
+          <div class="problem-card">
+            <div class="problem-num">01</div>
+            <h3>グッズを作っても売る場所がなく、発送も大変</h3>
+            <p>ネット販売の仕組みがわからない、梱包・発送作業が煩雑でリリースのたびに疲弊する。せっかくのグッズが在庫として積み上がっていく。</p>
+          </div>
+          <div class="problem-card">
+            <div class="problem-num">02</div>
+            <h3>ライブ予約管理が煩雑すぎて手が回らない</h3>
+            <p>DM・メール・口頭でバラバラに受け付けた予約を手動で管理。ダブルブッキングやキャンセル対応に追われてリハーサルの時間が奪われる。</p>
+          </div>
+          <div class="problem-card">
+            <div class="problem-num">03</div>
+            <h3>SNSのDM対応に追われて音楽活動に集中できない</h3>
+            <p>ファンからのDMや問い合わせが増えるほど返信作業が膨大になる。深夜まで対応しても終わらず、創作活動の時間が削られてしまう。</p>
+          </div>
+          <div class="problem-card">
+            <div class="problem-num">04</div>
+            <h3>販売手数料が高くて利益がほとんど出ない</h3>
+            <p>大手プラットフォームの手数料は10〜20%。製作費・送料を引いたら赤字になることも。次のCD制作や活動費が全然溜まらない。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FEATURES ===== -->
+    <section class="section features" id="features" aria-labelledby="features-h2">
+      <div class="container">
+        <div class="text-center" style="margin-bottom:56px;">
+          <span class="section-label">TODOKEの4大機能</span>
+          <h2 class="section-title" id="features-h2">
+            アーティスト グッズ 販売から<br>
+            ライブ予約・AI対応まで、ひとつのアプリで完結
+          </h2>
+          <p class="section-desc">元プロアーティストが「本当に欲しかった機能」だけを詰め込みました</p>
+        </div>
+        <div class="features-grid">
+
+          <div class="feature-card">
+            <div class="feature-icon-wrap" style="background:#eef2ff;">🎟️</div>
+            <h3>ライブ予約管理</h3>
+            <p>
+              予約受付・確認・キャンセル対応をすべて自動化。ダブルブッキングの心配なし。
+              リスト管理・リマインド通知まで一元管理できるので、ライブ当日まで音楽だけに集中できます。
+            </p>
+            <span class="feature-tag" style="background:#eef2ff;color:#6366f1;">予約の自動化</span>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-wrap" style="background:#fce7f3;">💬</div>
+            <h3>DM自動返信（AI）</h3>
+            <p>
+              InstagramなどのDMにAIが24時間自動で返信。ライブ情報・グッズ案内・よくある質問への対応を
+              あなたの代わりに行います。プロモーション機能付きで新曲リリース告知にも活用可能。
+            </p>
+            <span class="feature-tag" style="background:#fce7f3;color:#db2777;">AI搭載</span>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-wrap" style="background:#ecfdf5;">🛒</div>
+            <h3>アーティスト グッズ 販売EC</h3>
+            <p>
+              オリジナルグッズ・CDを即日ネット販売開始。ストア設定はシンプルで誰でも迷わず開設できます。
+              販売手数料は完全無料なので、売上をそのまま次の制作費に充てられます。
+            </p>
+            <span class="feature-tag" style="background:#ecfdf5;color:#10b981;">手数料0円</span>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-wrap" style="background:#fff7ed;">📦</div>
+            <h3>発送代行</h3>
+            <p>
+              売れたグッズ・CDの梱包・発送をTODOKEが代行。レターパックライト（全国一律430円）を活用した
+              低コスト発送で、あなたは在庫を渡すだけ。発送作業から完全解放されます。
+            </p>
+            <span class="feature-tag" style="background:#fff7ed;color:#f97316;">発送まるごとお任せ</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section class="section about" id="about" aria-labelledby="about-h2">
+      <div class="container">
+        <div class="about-inner">
+
+          <!-- 写真が用意できたら下記のimgタグのコメントを外してください -->
+          <!--
+          <img
+            src="images/nao.jpg"
+            alt="TODOKE代表 NAO - 元プロアーティスト出身の起業家"
+            class="about-photo"
+            width="240" height="240"
+          >
+          -->
+          <div class="about-placeholder" role="img" aria-label="代表NAOの写真（準備中）">🎤</div>
+
+          <div class="about-text">
+            <span class="section-label">代表プロフィール</span>
+            <h2 id="about-h2">NAO</h2>
+            <p class="about-en">Founder &amp; CEO of TODOKE</p>
+            <div class="about-tags">
+              <span class="about-tag">元プロアーティスト</span>
+              <span class="about-tag">メジャーレーベル経験</span>
+              <span class="about-tag">起業家</span>
+            </div>
+            <blockquote class="about-quote">
+              「インディーズ時代、グッズが売れず、手数料で利益が消え、DM返信と発送作業で疲弊していました。
+              メジャーデビューして初めてわかった——問題は才能じゃなく、環境だったんです。<br><br>
+              アーティストが音楽だけに集中できる環境をつくりたい。
+              同じ悩みをリアルに経験したからこそつくれたサービスが、TODOKEです。」
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PRICING ===== -->
+    <section class="section pricing" id="pricing" aria-labelledby="pricing-h2">
+      <div class="container">
+        <div class="text-center" style="margin-bottom:56px;">
+          <span class="section-label">料金プラン</span>
+          <h2 class="section-title" id="pricing-h2">シンプルで明快な料金体系</h2>
+          <p class="section-desc">隠れた費用は一切ありません</p>
+        </div>
+        <div class="pricing-wrap">
+
+          <div class="pricing-card free">
+            <div class="pricing-badge-wrap">
+              <span class="pricing-badge">発送代行 手数料</span>
+            </div>
+            <p class="pricing-feature-name">アーティスト グッズ 販売・発送代行</p>
+            <div>
+              <span class="pricing-amount">¥0</span>
+            </div>
+            <p style="font-size:.85rem;opacity:.6;margin-top:6px;">完全無料・永続的に</p>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-list">
+              <li><span class="ck">✓</span><span>販売手数料：<strong>完全無料</strong></span></li>
+              <li><span class="ck">✓</span><span>登録料・月額費用：<strong>なし</strong></span></li>
+              <li><span class="ck">✓</span><span>発送実費（レターパックライト430円）のみ</span></li>
+              <li><span class="ck">✓</span><span>梱包・発送作業はすべてTODOKEが対応</span></li>
+            </ul>
+            <p class="pricing-note">※ レターパックライト代（430円/件）は発送実費としてご負担いただきます。それ以外の費用は一切発生しません。</p>
+          </div>
+
+          <div class="pricing-card inquiry">
+            <div class="pricing-badge-wrap">
+              <span class="pricing-badge">その他機能</span>
+            </div>
+            <p class="pricing-feature-name">ライブ予約管理 / DM自動返信 / EC</p>
+            <div class="pricing-amount">お問い合わせ</div>
+            <p style="font-size:.82rem;color:var(--gray-text);margin-top:6px;">ご利用状況に合わせてご案内</p>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-list">
+              <li><span class="ck">✓</span><span>ライブ予約管理機能</span></li>
+              <li><span class="ck">✓</span><span>AI DM自動返信機能</span></li>
+              <li><span class="ck">✓</span><span>ECストア機能</span></li>
+              <li><span class="ck">✓</span><span>NAOによる直接サポート</span></li>
+            </ul>
+            <a href="#contact" class="btn-inquiry">詳細を問い合わせる</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section class="section contact" id="contact" aria-labelledby="contact-h2">
+      <div class="container">
+        <div class="text-center" style="margin-bottom:48px;">
+          <span class="section-label">お問い合わせ</span>
+          <h2 class="section-title" id="contact-h2">
+            アーティスト グッズ 販売・<br>
+            TODOKE導入のご相談はこちら
+          </h2>
+          <p class="section-desc">まずはお気軽にメッセージをお送りください。NAOが直接返信します。</p>
+        </div>
+        <div class="contact-wrap">
+          <form action="#" method="POST" name="contact" novalidate>
+            <div class="form-group">
+              <label for="name">お名前（アーティスト名）<span class="req">*</span></label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="例：NAO / バンド名など"
+                required
+                autocomplete="name"
+              >
+            </div>
+            <div class="form-group">
+              <label for="email">メールアドレス<span class="req">*</span></label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="例：your@email.com"
+                required
+                autocomplete="email"
+              >
+            </div>
+            <div class="form-group">
+              <label for="message">ご相談・お問い合わせ内容</label>
+              <textarea
+                id="message"
+                name="message"
+                placeholder="例：グッズ発送代行を検討しています。CDとTシャツを月10〜20個ほど発送したいです。"
+              ></textarea>
+            </div>
+            <button type="submit" class="form-submit">送信する（無料・返信保証）</button>
+            <p class="form-note">
+              通常1〜2営業日以内にNAOから直接ご返信いたします。<br>
+              お問い合わせ・ご相談は完全無料です。
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">
+      <div class="footer-logo">TOD<span class="dot">O</span>KE</div>
+      <p class="footer-tagline">
+        インディーズアーティストのグッズ販売・発送代行・ライブ予約・AI DM自動返信を<br>
+        ワンストップで提供するアーティスト グッズ 販売支援アプリ
+      </p>
+      <nav class="footer-nav" aria-label="フッターナビゲーション">
+        <a href="#problem">課題</a>
+        <a href="#features">4大機能</a>
+        <a href="#about">代表NAO</a>
+        <a href="#pricing">料金</a>
+        <a href="#contact">お問い合わせ</a>
+      </nav>
+      <p class="footer-copy">&copy; 2026 TODOKE. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- スクロールトップボタン -->
+  <button class="scroll-top" id="scrollTop" aria-label="ページトップへ戻る">&#8679;</button>
+
+  <script>
+    // ヘッダースクロール
+    const header    = document.getElementById('header');
+    const scrollBtn = document.getElementById('scrollTop');
+
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      header.classList.toggle('scrolled', y > 50);
+      scrollBtn.classList.toggle('visible', y > 300);
+    });
+
+    scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // ハンバーガーメニュー
+    const hamburger     = document.getElementById('hamburger');
+    const mobileNav     = document.getElementById('mobileNav');
+    const mobileClose   = document.getElementById('mobileNavClose');
+    const mobileLinks   = document.querySelectorAll('.mobile-link');
+
+    const openNav  = () => { mobileNav.classList.add('open'); mobileNav.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; };
+    const closeNav = () => { mobileNav.classList.remove('open'); mobileNav.setAttribute('aria-hidden','true'); document.body.style.overflow=''; };
+
+    hamburger.addEventListener('click', openNav);
+    hamburger.addEventListener('keydown', e => { if(e.key==='Enter') openNav(); });
+    mobileClose.addEventListener('click', closeNav);
+    mobileLinks.forEach(l => l.addEventListener('click', closeNav));
+
+    // スムーススクロール
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function(e) {
+        const t = document.querySelector(this.getAttribute('href'));
+        if (!t) return;
+        e.preventDefault();
+        const offset = header.offsetHeight + 12;
+        window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
+      });
+    });
+
+    // スクロールアニメーション
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.style.opacity  = '1';
+          en.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll(
+      '.problem-card, .feature-card, .mini-card, .pricing-card, .about-inner, .contact-wrap'
+    ).forEach((el, i) => {
+      el.style.opacity    = '0';
+      el.style.transform  = 'translateY(28px)';
+      el.style.transition = `opacity 0.6s ease ${i * 0.06}s, transform 0.6s ease ${i * 0.06}s`;
+      io.observe(el);
+    });
+  </script>
+
+</body>
+</html>
